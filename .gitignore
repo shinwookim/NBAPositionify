@@ -1,9 +1,9 @@
 .DS_Store
-
+*.png
 # Datasets
 *.csv
 *.zip
-
+*.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
