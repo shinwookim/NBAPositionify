@@ -1,0 +1,60 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+\subsection{Dataset}
+We construct our classifiers and perform clustering analysis based on data from the Basketball Reference \cite{goldstein_2018}, a website that collects and aggregates player and season data. The data we use spans NBA seasons from 1950 to 2016 and has information on 4,500 different players. In addition, the dataset contains each player's individual season statistics, with a total of 24,691 player-season data.
+
+\subsection{Exploratory Data Analysis}\label{subsec:eda}
+The dataset we used is split into separate ``player'' data and ``season'' data files. The player data file contains the player's name, height, weight, years played, college attended, date of birth, and birth city/state. The season data file contains over 50 game statistics including percentage of assists, number of blocks, points scored, and most importantly, the position they played. Since we wanted to perform our analysis on all possible features, we needed to merge the two datasets into one. 
+
+In addition, due to a lack of record-keeping in earlier seasons (circa 1950), many records in the dataset contained null values, as shown in table 1. These null-valued records proved problematic, as they could not be used with many classification and clustering algorithms. Thus, in our data preprocessing stage, these records needed to be removed.
+
+\begin{table}[H]
+\label{tab:dataset-head}
+\begin{tabular}{@{}ccccccccccccccc@{}}
+\toprule
+\textbf{Year} & \textbf{Player} & \textbf{Pos} & \textbf{Age} & \textbf{Tm} & \textbf{G} & \textbf{GS} & \textbf{MP} & \textbf{...} & \textbf{DRB} & \textbf{TRB} & \textbf{STL} & \textbf{BLK} & \textbf{TOV} & \textbf{PF} \\ \midrule
+1950          & Curly Armstrong & G-F          & 31           & FTW         & NaN        & NaN         & NaN         & ...          & NaN          & NaN          & NaN          & NaN          & NaN          & 217         \\ \bottomrule
+\end{tabular}
+\caption{An example row in the dataset}
+\end{table}
+
+Similarly, the representation of the ``position'' column was inconsistent throughout the dataset. While most entries contained only one position, for players who played as multiple positions in one season the data was concatenated into one column (e.g., ``G-F'' for a player who played as both a guard and forward in one season). In addition, some position labels lacked specificity, writing merely ``G'' (guard), rather than specifying ``PG'' (point guard), or ``SG'' (shooting guard). Thus, in the data preprocessing stage, hyphenated positions needed to be separated in to multiple data rows and generic position labels were extended into their more specific classes. While this did increase the likelihood of misclassification, it allowed us to represent a player that is capable of playing in more than one position in a usable format.
+
+\subsubsection{Feature Selection}
+As part of our data exploration, we attempted to na\"ively fit classifiers, mainly a decision tree, with little to no restrictions. Unfortunately, this proved meritless, as we were left with a very overfit tree which did not reveal much.
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=1\linewidth]{photos/overfit.png}
+        \caption{Overfitted Decision Tree}
+    \label{fig:overfit-tree}
+\end{figure}
+
+
+Thus, we attempted to perform feature selection, in order to identity the most relevant predictors for player positions. To do this, we used a random forest classifier and ranked each feature based on their \textit{Mean Decrease in Impurity}. The results of this analysis are given in figure \ref{fig:feature-selection}.
+\begin{figure}[h!]\centering
+\begin{subfigure}{.45\textwidth}
+    \includegraphics[width=\linewidth]{photos/mdi-feature-select-graph.png}
+\end{subfigure}
+\begin{subfigure}{.45\textwidth}\centering
+    \begin{tabular}{cc}\toprule
+    Features    & MDI     \\\midrule
+    Height      & 0.150492\\
+    AST\%       & 0.085989\\
+    Weight      & 0.079264\\
+    TRB\%       & 0.054982\\
+    DRB\%       & 0.044862\\
+    ORB\%       & 0.043170\\
+    BLK\%       & 0.028269\\
+    3PAr        & 0.025008\\
+    BMI         & 0.023135\\
+    TOV\%       & 0.021247\\\bottomrule
+    \end{tabular}
+    \caption{Top 10 Most Important Features}\label{tab:feature-selection}    
+\end{subfigure}
+\caption{Features Importance based on Mean Decrease in Impurity}
+\label{fig:feature-selection}
+\end{figure}
+
+And indeed, the importance of this features can be explained with a general understanding of the game. Players with high assists (the ``quarterback'' of offense) are typically the ones that call the plays and have control of the ball most in an offensive posessions. Hence, they are likely to be point guards. Power Forwards and Centers usually play close to the rim, ready to grab rebounds at a higher rate than all other players. Thus, it makes sense that that the total rebound percentage (TRB\%), as well as offensive and defensive rebound percentage (ORB\% and DRB\%) are relevant to position. Finally, there is a clear hierarchy in height and weight from Point Guards to Centers, with Point and Shooting Guards being generally shorter and smaller than power forwards and centers.
+\end{document}

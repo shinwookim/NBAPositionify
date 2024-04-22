@@ -1,6 +1,6 @@
 # NBAPositionify: Leveraging Data Mining Techniques to Classify Professional Basketball Players into Positions
 
-[[Paper]](report.pdf)
+[[Paper]](./docs/report.pdf) [[Slides]](./docs/slides.pptx)
 
 This repository contains all the material for the CS 2756 (Principles of Data Mining) term project. The course was taught by Dr. Xiaowei Jia at the Univeristy of Pittsburgh during the spring 2024 semester. This project was developed by [Shinwoo Kim](https://github.com/shinwookim), [Robbie Fishel](https://github.com/FishOfPitt116), and [Birju Patel](https://github.com/birjusuketupatel). 
 

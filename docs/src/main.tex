@@ -1,0 +1,78 @@
+\documentclass[nonacm]{acmart}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+\setcopyright{none}
+\pagestyle{plain}
+\makeatletter
+\let\@authorsaddresses\@empty
+\makeatother
+
+% Packages
+\usepackage[english]{babel}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{graphicx,wrapfig}
+\usepackage{enumitem}\setlist[enumerate]{noitemsep, nolistsep}
+\usepackage{subcaption}
+\usepackage{tikz}\usetikzlibrary{backgrounds,positioning}
+\usepackage{marvosym}
+\usepackage{subfiles}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algcompatible}
+\usepackage{algpseudocode}
+% Document Frontmatter
+
+\title{NBAPositionify: Leveraging Data Mining Techniques to Classify Professional Basketball Players into Positions}
+\subtitle{Term Project Report \textit{for CS 2756: Principles of Data Mining}}
+
+\author{Shinwoo Kim}
+\email{shinwookim@pitt.edu}
+
+\author{Robbie Fishel}
+\email{rmf105@pitt.edu}
+
+\author{Birju Patel}
+\email{bsp22@pitt.edu}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+\section{Background and Motivation}
+\begin{wrapfigure}{r}{5.5cm}
+    \centering
+    \includegraphics[width=\linewidth]{photos/Basketball_Positions.png}
+    \caption{Basketball positions with the numbers as they are known: (1) Point Guard, (2) Shooting Guard, (3) Small Forward, (4) Power Forward, and (5) Center. Illustration from \href{https://en.wikipedia.org/wiki/Basketball_positions}{Wikipedia}.}
+    \label{fig:basketball-positions}
+\end{wrapfigure}
+In professional basketball, the role of a player in a game is not solely defined by their physical stature or position on the court. Rather, it is a dynamic interplay of various skill sets, athletic abilities, and tactical understanding. Traditionally, players are categorized into the positions of point guards (PG), shooting guards (SG), small forwards (SF), power forwards (PF), and centers (C), as shown in figure \ref{fig:basketball-positions}. However, as basketball has evolved, the delineation between these positions has become increasingly blurred.
+
+In recent years, many teams have introduced data analysis techniques for evaluating players and determining team strategies. By harnessing the power of data, teams gain deeper insights into player performance, and they can optimize their lineup on-the-fly in order to enhance overall team efficiency.
+
+\subfile{problem_statement}
+
+\section{Related Work}
+Works such as \cite{from_5} and \cite{shea_2014} use in-game spatial and topological data in order to classify players into positions. Unfortunately, these work do not incorporate player statistics into their decisions. There is preliminary work by Song and Wang that uses naive clustering methods in order to fit players to positions \cite{song_wang_2017}; however, their work is limited to NBA players in the 2015-2016 season only. We conduct a more overarching analysis with data that spans many more seasons.
+
+\section{Method}
+\subfile{classification_method}
+\subfile{clustering_method}
+
+\section{Experiment and Results}
+\subfile{dataset}
+\subfile{classification_experiment}
+\subfile{clustering_experiment}
+
+\section{Conclusion}
+In summary, we used several different data mining techniques—most notably classification and clustering—to help in guiding our understanding of professional basketball positions and what players fall into what groups. We built several classification models with high performance to place players given their statistics into the five positional categories. We also performed feature selection to determine the importance of each feature in predicting position. From this, we were able to construct a simple decision tree that can be used as a heuristic for coaches and scouts to place players in the position that would potentially best suits their skills. Lastly, we also used the selected features to cluster players for further analysis, and for determining noteworthy outliers.
+
+\appendix
+\section{Contributions \& Division of Work}
+Shinwoo Kim was responsible for preliminary exploratory data analysis (as described in section \ref{subsec:eda}). Shinwoo Kim and Birju Patel worked collaboratively on implementing and analyzing the classification methods described in section \ref{subsec:classify}. Robbie Fishel was responsible for clustering analysis (as described in section \ref{subsec:clustering}) and for outlier analysis. Importantly, Robbie Fishel provided background expertise on professional basketball. All team members equally contributed to drafting and revising this paper, and preparing for the presentation.
+
+\section{Project Code}
+The code used during the production of this report is publicly available, and can be found on-line at \url{https://github.com/shinwookim/NBAPositionify}. For the original dataset, see \cite{basketball_reference_2000}.
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{sources}
+\end{document}

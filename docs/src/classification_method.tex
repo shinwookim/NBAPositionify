@@ -1,0 +1,29 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+\subsection{Classification of Players by Position} \label{subsec:classify}
+Classification, the task of assigning objects to one of several predefined categories, is a pervasive problem that encompasses many diverse applications. In the case of our problem, the goal is to categorize basketball players into positions (point guard, shooting guard, small forward, power forward, or center) based on their various features and season statistics. To accomplish this goal, we consider various classification methods, outlined below.
+
+\subsubsection{Decision Trees}
+A decision tree is a simple but popular classification technique. In this technique, the tree has a flowchart-like structure, where each internal node represents a ``test'' on a feature, each branch represents the outcomes of the test, and the leaf nodes represent a class label. An example of a decision tree is shown in figure \ref{fig:decesion-tree-ex}.
+
+\begin{wrapfigure}{l}{5.5cm}
+    \centering
+    \includegraphics[width=\linewidth]{photos/decision-tree-example.png}
+    \caption{An example of a decision tree for classifying mammals.}
+    \label{fig:decesion-tree-ex}
+\end{wrapfigure}
+
+Decision trees are useful since they are easy to understand and interpret. They can also handle both numerical and categorical data, which makes them particularly useful for this project. Unfortunately, decision trees are prone to overfitting if not pruned properly, meaning they might learn the training data too well and perform poorly on unseen data. 
+
+\subsubsection{Boosted Trees}
+Boosting is an ensemble technique that combines the predictions from multiple decision trees to create a more powerful model. It employs an iterative procedure to change the distribution of training data by focusing more on previously misclassified records. This is accomplished by assigning weights to each training example, and are adaptively changing them at the end of each boosting round.
+
+Boosted trees are highly flexible and powerful models that can capture complex relationships in the data. Furthermore, boosted trees tend to perform very well on a wide range of datasets and are less prone to overfitting compared to individual decision trees. For this project, we use a popular Python-based implementation of boosted trees called \textit{XGBoost} which uses gradient descent to optimize the loss function \cite{Chen:2016:XST:2939672.2939785}. 
+
+\subsubsection{Logistic Regression}
+The logistic regression classifier works by learning a simple linear function from the dataset to map input features to output classes. When given a training example, the model calculates the difference between the output from its current weights and the true class. It then uses this loss to modify its initial weights. This is done iteratively for each example in the training set.
+
+\subsubsection{Random Forests}
+Random Forest is another ensemble technique that attempts to improve the generalization performance by constructing an ensemble of ``decorrelated'' decision trees. In other words, the random forest technique creates multiple decision trees during training and combines their predictions to produce a more accurate and robust model. Random Forests are advantageous in that they provide reduced overfitting, show better generalization performance, and provide a measure of feature importance.
+
+\end{document}

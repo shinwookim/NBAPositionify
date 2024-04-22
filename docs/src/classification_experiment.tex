@@ -1,0 +1,39 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+\subsection{Classification Performance}
+After running the various classification techniques on our dataset and attempting to optimize each model in order to get better performance, we found decision trees to be the worst performing model, as shown in table \ref{tab:summary-stats}. This was as expected, since decision trees are usually simpler models that are not the most effective at identifying fine-grained differences between training samples.
+
+\begin{table}[H]
+\begin{tabular}{rcccc}\toprule
+    Model & Decision Tree & XGBoost & Logistic Regression & Random Forest \\ \midrule
+    Accuracy & 68.78\% & 70.77\% & 76.80\% & 78.01\% \\
+\bottomrule\end{tabular}
+\caption{Classifier Performance Summary}\label{tab:summary-stats}
+\end{table}
+On the other hand, the best performing models were logistic regression and random forest, with random forest being slightly better overall. We suspect that the random forest model, which works by learning a series of linear decision boundaries, had high performance, since the data is clustered by position. One surprising result was the performance of XGBoost, which was significantly lower than the Random Forest model. Since the two methods are similar decision tree based ensemble techniques, we expected them to show similar performance. However, this was not the case. We suspect that this is because the Random Forest classifier can better handle feature importance analysis, to minimize the impact of low-importance features.
+
+\begin{wrapfigure}{l}{5.5cm}
+    \centering
+    \includegraphics[width=\linewidth]{photos/confusion-matrix.png}
+    \caption{Confusion Matrix for Random Forest Model}
+    \label{fig:conf-matrix}
+\end{wrapfigure}
+In addition, we found that the classification model typically confuses players with similar positions. That is, the model often misclassifies a shooting guard for a point guard, but rarely misclassifies it as a forward. This suggests that the data is clustered, and that guards are typically grouped into one cluster, while forwards are grouped into another.
+
+\subsection{Key Findings from Classification Methods}
+To extract useful ``heuristic rules'', we constructed a decision tree of depth 3 that can be used to summarize our findings, as shown in figure \ref{fig:3-level-dt}
+. Such heuristic rules could prove important since they can directly and easily be applied by coaches and scouts on the field. Some key takeaways are summarized below:
+\begin{itemize}[noitemsep, topsep=0pt]
+    \item Point Guards and Shooting Guards are generally shorter.
+    \item Power Forwards, Small Forwards, and Centers are generally taller.
+    \item Point Guards have more assists than Shooting Guards.
+    \item Power Forwards make more rebounds than Small Forwards.
+\end{itemize} 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{photos/3-level-dt.png}
+    \caption{A Simple Decision Tree Summarizing Key Findings.}
+    \label{fig:3-level-dt}
+\end{figure}
+\end{document}
